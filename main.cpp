@@ -4,14 +4,14 @@
 #include "include/inc/stdafx.h"
 #include "include/inc/NetDataStruct.h"
 #include <iostream>
-#include<opencv2/opencv.hpp>
+#include <opencv2/opencv.hpp>
 using namespace Iray;
 
 int main()
 {
 	//初始化数据接口对象
 	Iray::DataReceiveInterface* m_pDataRevInterFace = new Iray::DataReceiveInterface();
-	std::string strIp = "127.0.0.1";
+	std::string strIp = "192.168.3.115";
 	//建立连接
 	std::cout << "connecting to " << strIp << std::endl;
 	bool bIsConnected = m_pDataRevInterFace->connectToHost(strIp);
@@ -30,16 +30,15 @@ int main()
 		{
 			std::cout << version << std::endl;
 			std::cout << "width: " << panorData.width << " height: " << panorData.height << std::endl;
+			std::cout << "Resize to 35840, 1024" << std::endl;
 			//全景数据
 			cv::Mat img(panorData.height, panorData.width, CV_8UC1, panorData.data);
+			cv::resize(img, img, cv::Size(35840, 1024));
 			cv::imshow("img", img);
 			cv::imwrite("panoramic.png", img);
-			return 0;
 			cv::waitKey(1);
-			//panorData.data;
+			return 0;
 		}
-
-		//Sleep(10);
 	}
 
 	//断开连接
