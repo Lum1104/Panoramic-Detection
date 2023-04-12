@@ -4,6 +4,7 @@
 #include "include/inc/stdafx.h"
 #include "include/inc/NetDataStruct.h"
 #include <iostream>
+#include<opencv2/opencv.hpp>
 using namespace Iray;
 
 int main()
@@ -30,7 +31,12 @@ int main()
 			std::cout << version << std::endl;
 			std::cout << "width: " << panorData.width << " height: " << panorData.height << std::endl;
 			//È«¾°Êý¾Ý
-			panorData.data;
+			cv::Mat img(panorData.height, panorData.width, CV_8UC1, panorData.data);
+			cv::imshow("img", img);
+			cv::imwrite("panoramic.png", img);
+			return 0;
+			cv::waitKey(1);
+			//panorData.data;
 		}
 
 		//Sleep(10);
